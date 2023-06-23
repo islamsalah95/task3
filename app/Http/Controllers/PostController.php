@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -34,9 +37,26 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|string|max:255',
+        ]);
+        
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+
+      $result=Post::create([
+        'content'=>$request->content,
+        'user_id'=>Auth::user()->id,
+      ]);
+
+      return  response()->json(['data'=>$result], 200);
+
     }
 
     /**
