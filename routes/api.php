@@ -27,7 +27,8 @@ Route::post('/Auth/login', [AuthController::class, 'login']);
 
 
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('IsAuth')->group(function () {
     Route::post('posts/store', [PostController::class, 'store']);
+    Route::get('posts/userPost', [PostController::class, 'userPost']);
 
 });

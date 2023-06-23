@@ -16,9 +16,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function userPost()
     {
-        //
+
+        $result=Post::where('user_id', Auth::user()->id)->get();
+
+        return  response()->json(['data'=>$result], 200);
+
+
     }
 
     /**

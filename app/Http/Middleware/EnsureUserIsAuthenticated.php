@@ -19,11 +19,14 @@ class EnsureUserIsAuthenticated
     {
         $token = $request->header('Authorization');
 
+
         if (!$token) {
             
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $next($request);
+
+
+        // return $next($request);
     }
 }
